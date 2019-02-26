@@ -1,8 +1,7 @@
 # Prime numbers generator
 Assembly language, MIPS
+
 Politechnika Warszawska, Architektura komputerów ARKO 19L
-
-
 
 ## Pseudocode
 ```
