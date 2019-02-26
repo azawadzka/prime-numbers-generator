@@ -3,7 +3,7 @@ Assembly language, MIPS
 
 Politechnika Warszawska, Architektura komputerów ARKO 19L
 
-## Pseudocode
+### Pseudocode for Assembly Language
 ```
 i = start - 1
 loop i:
