@@ -1,0 +1,95 @@
+# Prime numbers generator
+# ARKO Anna Zawadzka 2019
+
+.data
+	message1:	.asciiz "Prime numbers generator\n-----***-----\n"
+	message2:	.asciiz "Type in range beginning:\n"
+	message3:	.asciiz "Type in range end:\n"
+	message4:	.asciiz "The prime numbers are: "
+	message5:	.asciiz "\nProgram has finished execution.\n"
+	space:		.byte	' '
+	error1:		.asciiz "This range is illegal."
+	error2:		.asciiz "There are no prime numbers within this range."
+	error3:		.asciiz "Range must start with a number greater than 1."
+	
+# $t0 - holds the divided number (i)
+# $t1 - holds the number divided by (j)
+# $t2 - holds the remainder
+# $t3 - holds stop
+# $t4 - prime numbers counter
+.text
+	main:
+		li $v0, 4
+		la $a0, message1
+		syscall
+		
+		li $v0, 4
+		la $a0, message2
+		syscall
+		li $v0, 5
+		syscall
+		move $t0, $v0
+		
+		ble $t0, 1 small_number_error
+		
+		li $v0, 4
+		la $a0, message3
+		syscall
+		li $v0, 5
+		syscall
+		move $t3, $v0
+		
+		ble $t3, $t0, range_error
+		
+		sub $t0, $t0, 1
+		move $t4, $zero
+		loopi:
+			addi $t0, $t0, 1
+			beq $t0, $t3, end
+			addi $t1, $zero, 1
+			loopj:
+				addi $t1, $t1, 1
+				beq $t0, $t1, print
+				div $t0, $t1
+				mfhi $t2
+				beqz $t2 loopi
+				j loopj
+		
+		end:
+			bnez $t4 exit
+			li $v0, 4
+			la $a0, error2
+			syscall
+			exit:
+			li $v0, 4
+			la $a0, message5
+			syscall
+			li $v0, 10
+			syscall
+			
+	print:
+		addi $t4, $t4, 1
+		bne $t4, 1 skip_line
+		li $v0, 4
+		la $a0, message4
+		syscall
+		skip_line:
+		li $v0, 1
+		move $a0, $t1
+		syscall
+		li $v0, 11
+		lb $a0, space
+		syscall
+		j loopi
+		
+	range_error:
+		li $v0, 4
+		la $a0, error1
+		syscall
+		j exit
+		
+	small_number_error:
+		li $v0, 4
+		la $a0, error3
+		syscall
+		j exit
