@@ -1,10 +1,10 @@
-#Prime numbers generator
+# Prime numbers generator
 Assembly language, MIPS
-Politechnika Warszawska, Architektura komputerów ARKO 19L
+Politechnika Warszawska, Architektura komputerÃ³w ARKO 19L
 
 
 
-##Pseudocode
+## Pseudocode
 ```
 i = start - 1
 loop i:
